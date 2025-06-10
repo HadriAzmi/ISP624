@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tumpanggg Ride - Medical & Essential Transport</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-bg-1: #0f0f23;
+            --dark-bg-2: #1a1a2e;
+            --dark-bg-3: #16213e;
+            --neon-blue: #3b82f6;
+            --neon-green: #10b981;
+            --neon-purple: #8b5cf6;
+            --neon-pink: #ec4899;
+            --neon-cyan: #06b6d4;
+            --text-light: #e0e6ff;
+            --text-gray: #9ca3af;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark-bg-1) 0%, var(--dark-bg-2) 50%, var(--dark-bg-3) 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 20%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: rgba(26, 26, 46, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+        }
+        
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--neon-purple);
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .card-title i {
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 20px;
+            background: rgba(15, 15, 35, 0.6);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+        }
+        
+        .location-btn {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 50px;
+        }
+        
+        .location-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: white;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+            transform: translateY(-3px);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-light);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .driver-card {
+            background: rgba(15, 15, 35, 0.5);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .driver-card:hover {
+            background: rgba(26, 26, 46, 0.7);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+        
+        .driver-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--neon-purple);
+        }
+        
+        .driver-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .driver-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .driver-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: rgba(139, 92, 246, 0.2);
+        }
+        
+        .driver-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--neon-blue);
+        }
+        
+        .driver-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #fbbf24;
+            font-weight: 600;
+        }
+        
+        .driver-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .detail-value {
+            font-weight: 600;
+        }
+        
+        .price-estimate {
+            background: rgba(16, 185, 129, 0.15);
+            border-radius: 10px;
+            padding: 12px 15px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--neon-green);
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .specialties {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .specialty {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--neon-purple);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .tracking-container {
+            position: relative;
+            height: 180px;
+            background: rgba(15, 15, 35, 0.5);
+            border-radius: 14px;
+            margin: 20px 0;
+            overflow: hidden;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(26, 26, 46, 0.7), rgba(26, 26, 46, 0.9)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="rgba(139, 92, 246, 0.2)" stroke-width="0.5"/></svg>');
+            background-size: 20px 20px;
+        }
+        
+        .driver-marker {
+            position: absolute;
+            top: 30%;
+            left: 20%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: var(--neon-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px var(--neon-purple);
+            animation: pulse 2s infinite;
+        }
+        
+        .user-marker {
+            position: absolute;
+            top: 70%;
+            left: 80%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+        
+        .route-line {
+            position: absolute;
+            top: 30%;
+            left: 20%;
+            width: 60%;
+            height: 2px;
+            background: var(--neon-green);
+            transform-origin: left center;
+            transform: rotate(30deg);
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+        
+        .tracking-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .info-card {
+            background: rgba(15, 15, 35, 0.5);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            flex: 1;
+            margin: 0 10px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        
+        .info-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 5px 0;
+            color: var(--neon-cyan);
+        }
+        
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+        
+        .history-list {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .history-item {
+            background: rgba(15, 15, 35, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--neon-purple);
+        }
+        
+        .history-date {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 5px;
+        }
+        
+        .history-locations {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .history-from, .history-to {
+            flex: 1;
+            padding: 10px;
+            background: rgba(26, 26, 46, 0.5);
+            border-radius: 8px;
+        }
+        
+        .history-price {
+            font-weight: 700;
+            color: var(--neon-green);
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: rgba(26, 26, 46, 0.95);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--neon-pink);
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--neon-purple);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(139, 92, 246, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--neon-purple);
+            animation: spin 1s linear infinite;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+        
+        .tab-container {
+            display: flex;
+            margin-bottom: 25px;
+            background: rgba(15, 15, 35, 0.5);
+            border-radius: 12px;
+            padding: 5px;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .confirmation-icon {
+            text-align: center;
+            font-size: 4rem;
+            color: var(--neon-green);
+            margin: 20px 0;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        /* Accessibility improvements */
+        input:focus, select:focus, button:focus {
+            outline: 2px solid var(--neon-cyan);
+            outline-offset: 2px;
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+        
+        /* Improved contrast */
+        .driver-name, .price-estimate, .info-value, .history-price {
+            color: #60a5fa; /* Brighter version for better contrast */
+        }
+        
+        .text-light {
+            color: #f3f4f6; /* Brighter text for better contrast */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">Tumpanggg Ride</h1>
+            <p class="tagline">Your trusted companion for medical and essential journeys</p>
+        </header>
+        
+        <div class="main-content">
+            <div class="main-panel">
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-car"></i> Book Your Ride</h2>
+                    
+                    <div class="form-group">
+                        <label for="pickupLocation"><i class="fas fa-map-marker-alt"></i> Pickup Location</label>
+                        <div class="input-group">
+                            <input type="text" id="pickupLocation" value="Your Current Location" aria-label="Pickup location">
+                            <button class="location-btn" id="getLocationBtn" aria-label="Get current location">
+                                <i class="fas fa-location-arrow"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="destination"><i class="fas fa-flag"></i> Destination</label>
+                        <select id="destination" aria-label="Select destination">
+                            <option value="">Select a destination</option>
+                            <option value="Hospital Selayang">🏥 Hospital Selayang</option>
+                            <option value="Institut Jantung Negara (IJN)">❤️ Institut Jantung Negara (IJN)</option>
+                            <option value="Kuala Lumpur Hospital">🏥 Kuala Lumpur Hospital</option>
+                            <option value="Other Medical Facility">⚕️ Other Medical Facility</option>
+                            <option value="Mosque">🕌 Mosque</option>
+                            <option value="Market">🛍️ Market</option>
+                            <option value="Other">📍 Other Location</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notes"><i class="fas fa-stethoscope"></i> Special Requirements</label>
+                        <select id="notes" aria-label="Select special requirements">
+                            <option value="">No special requirements</option>
+                            <option value="wheelchair">♿ Wheelchair accessible vehicle needed</option>
+                            <option value="elderly">👴 Assistance for elderly passenger</option>
+                            <option value="medical">🏥 Medical appointment - need extra time</option>
+                            <option value="luggage">🧳 Heavy luggage assistance</option>
+                            <option value="female-driver">👩 Prefer female driver</option>
+                            <option value="quiet">🤫 Prefer quiet ride</option>
+                            <option value="child-seat">👶 Child car seat needed</option>
+                        </select>
+                    </div>
+                    
+                    <button id="findRideBtn" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Find Available Rides
+                        <span id="loadingSpinner" class="loading" style="display: none;"></span>
+                    </button>
+                </div>
+                
+                <div class="card" id="rideResults" style="display: none; margin-top: 30px;">
+                    <h2 class="card-title"><i class="fas fa-users"></i> Available Drivers</h2>
+                    <div id="driverList">
+                        <!-- Driver cards will be inserted here -->
+                    </div>
+                    <p id="noDriversFound" class="text-center" style="display: none; padding: 20px;">
+                        <i class="fas fa-exclamation-circle"></i> No drivers found for your destination at this time. Please try again later.
+                    </p>
+                </div>
+                
+                <div class="card" id="rideTracking" style="display: none; margin-top: 30px;">
+                    <h2 class="card-title"><i class="fas fa-map-marked-alt"></i> Ride in Progress</h2>
+                    
+                    <div class="tracking-container">
+                        <div class="map-overlay">
+                            <div class="driver-marker">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <div class="user-marker">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="route-line"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="tracking-info">
+                        <div class="info-card">
+                            <div class="info-value" id="trackingETA">12 min</div>
+                            <div class="info-label">Estimated Arrival</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-value" id="trackingDistance">4.2 km</div>
+                            <div class="info-label">Distance</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-value" id="trackingPrice">RM 15.80</div>
+                            <div class="info-label">Final Price</div>
+                        </div>
+                    </div>
+                    
+                    <button id="cancelRideBtn" class="btn btn-secondary" style="margin-top: 20px;">
+                        <i class="fas fa-times"></i> Cancel Ride
+                    </button>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-history"></i> Ride History</h2>
+                    <div class="history-list" id="historyList">
+                        <!-- History items will be inserted here -->
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-info-circle"></i> Price Estimate</h2>
+                    <div class="price-estimate">
+                        <i class="fas fa-tag"></i> RM 0.00 - RM 0.00
+                    </div>
+                    <p style="text-align: center; margin-top: 15px; color: var(--text-gray);">
+                        Estimated price range for your trip
+                    </p>
+                </div>
+                
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-shield-alt"></i> Safety Features</h2>
+                    <ul style="padding-left: 20px; margin-top: 15px;">
+                        <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle" style="color: var(--neon-green);"></i> Driver background checks
+                        </li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle" style="color: var(--neon-green);"></i> Real-time tracking
+                        </li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle" style="color: var(--neon-green);"></i> Emergency contact sharing
+                        </li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle" style="color: var(--neon-green);"></i> Vehicle sanitization
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ride Details Modal -->
+    <div class="modal" id="rideDetailsModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeDetailsModal">&times;</button>
+            <h2 class="modal-title">Confirm Your Ride</h2>
+            
+            <div class="tab-container">
+                <div class="tab active" data-tab="details">Details</div>
+                <div class="tab" data-tab="price">Price Estimate</div>
+            </div>
+            
+            <div class="tab-content active" id="detailsTab">
+                <div style="margin-bottom: 25px;">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <div class="driver-icon" style="width: 60px; height: 60px; font-size: 1.8rem;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <div class="driver-name" id="modalDriverName">Driver Name</div>
+                            <div class="driver-rating">
+                                <i class="fas fa-star"></i> 4.8 (128 rides)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <div style="font-size: 0.9rem; color: var(--text-gray);">Vehicle</div>
+                            <div class="text-light" id="modalVehicle">Perodua Myvi (White)</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.9rem; color: var(--text-gray);">License Plate</div>
+                            <div class="text-light">ABC 1234</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.9rem; color: var(--text-gray);">Estimated Arrival</div>
+                            <div class="text-light" id="modalETA">10-15 min</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.9rem; color: var(--text-gray);">Estimated Price</div>
+                            <div class="text-light" id="modalPrice">RM 12.50 - RM 16.00</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <div style="font-weight: 600;">Pickup:</div>
+                        <div class="text-light" id="modalPickup">Your Location</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="font-weight: 600;">Destination:</div>
+                        <div class="text-light" id="modalDestination">Hospital Selayang</div>
+                    </div>
+                </div>
+                
+                <button id="confirmRideBtn" class="btn btn-primary">
+                    <i class="fas fa-check"></i> Confirm Ride
+                </button>
+            </div>
+            
+            <div class="tab-content" id="priceTab">
+                <div style="margin-bottom: 25px;">
+                    <div style="text-align: center; margin: 20px 0;">
+                        <div class="price-estimate" style="font-size: 1.8rem; padding: 20px;">
+                            <i class="fas fa-tag"></i> RM 12.50 - RM 16.00
+                        </div>
+                        <div style="color: var(--text-gray); margin-top: 10px;">
+                            Final price may vary based on route and traffic
+                        </div>
+                    </div>
+                    
+                    <div style="background: rgba(15, 15, 35, 0.5); border-radius: 12px; padding: 15px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <div>Base Fare</div>
+                            <div>RM 5.00</div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <div>Distance (approx. 8km)</div>
+                            <div>RM 8.00</div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <div>Accessibility Service</div>
+                            <div>RM 2.00</div>
+                        </div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px; padding-top: 10px; border-top: 1px solid rgba(139, 92, 246, 0.3);">
+                            <div style="font-weight: 600;">Estimated Total</div>
+                            <div style="font-weight: 600;">RM 15.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ride Confirmed Modal -->
+    <div class="modal" id="rideConfirmedModal">
+        <div class="modal-content">
+            <div class="confirmation-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 class="modal-title">Ride Confirmed!</h2>
+            
+            <div style="text-align: center; margin: 25px 0;">
+                <p style="margin-bottom: 15px; font-size: 1.1rem;">
+                    Your driver <span class="text-light" id="confirmedDriverName">Ahmad bin Omar</span> is on the way to your location.
+                </p>
+                <p style="color: var(--text-gray);">
+                    <i class="fas fa-car"></i> White Perodua Myvi • ABC 1234
+                </p>
+                <div class="price-estimate" style="margin: 20px auto; max-width: 200px;">
+                    <i class="fas fa-tag"></i> RM 14.50
+                </div>
+            </div>
+            
+            <button id="closeConfirmedModalBtn" class="btn btn-primary">
+                <i class="fas fa-thumbs-up"></i> Got It!
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulated driver data
+            const simulatedDrivers = [
+    {
+        id: 'driver1',
+        name: 'Ahmad bin Omar',
+        vehicle: 'Perodua Myvi (White)',
+        rating: 4.8,
+        eta: '10-15 min',
+        destinations: ['Hospital Selayang'],
+        specialties: ['wheelchair accessible', 'patient transport'],
+        icon: 'fas fa-user-md',
+        color: '#3b82f6',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver2',
+        name: 'Siti binti Abdullah',
+        vehicle: 'Honda City (Silver)',
+        rating: 4.9,
+        eta: '15-20 min',
+        destinations: ['Institut Jantung Negara (IJN)'],
+        specialties: ['elderly care', 'extra time assistance', 'female driver'],
+        icon: 'fas fa-user-nurse',
+        color: '#ec4899',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver3',
+        name: 'Lim Wei Ming',
+        vehicle: 'Proton Saga (Blue)',
+        rating: 4.5,
+        eta: '20-25 min',
+        destinations: ['Other Medical Facility'],
+        specialties: [],
+        icon: 'fas fa-car',
+        color: '#06b6d4',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver4',
+        name: 'Faridah Aisyah',
+        vehicle: 'Perodua Bezza (Red)',
+        rating: 4.7,
+        eta: '12-18 min',
+        destinations: ['Mosque'],
+        specialties: ['female driver', 'quiet ride'],
+        icon: 'fas fa-user',
+        color: '#f97316',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver5',
+        name: 'Rajesh Kumar',
+        vehicle: 'Toyota Vios (Black)',
+        rating: 4.6,
+        eta: '10-15 min',
+        destinations: ['Market'],
+        specialties: ['heavy luggage assistance'],
+        icon: 'fas fa-shopping-cart',
+        color: '#a855f7',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver6',
+        name: 'Nur Aina',
+        vehicle: 'Honda Jazz (White)',
+        rating: 4.9,
+        eta: '8-12 min',
+        destinations: ['Kuala Lumpur Hospital'],
+        specialties: ['child car seat needed'],
+        icon: 'fas fa-baby',
+        color: '#10b981',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver7',
+        name: 'Hafiz Rahman',
+        vehicle: 'Nissan Almera (Grey)',
+        rating: 4.3,
+        eta: '17-22 min',
+        destinations: ['Other'],
+        specialties: ['quiet ride'],
+        icon: 'fas fa-volume-mute',
+        color: '#94a3b8',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver8',
+        name: 'Tan Mei Ling',
+        vehicle: 'Perodua Axia (Blue)',
+        rating: 4.4,
+        eta: '13-18 min',
+        destinations: ['Hospital Selayang'],
+        specialties: ['elderly care', 'female driver'],
+        icon: 'fas fa-user-nurse',
+        color: '#60a5fa',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver9',
+        name: 'Mohd Faizal',
+        vehicle: 'Toyota Avanza (Silver)',
+        rating: 4.7,
+        eta: '9-14 min',
+        destinations: ['Institut Jantung Negara (IJN)'],
+        specialties: ['wheelchair accessible'],
+        icon: 'fas fa-wheelchair',
+        color: '#22c55e',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver10',
+        name: 'Chong Wei Han',
+        vehicle: 'Hyundai Starex (Black)',
+        rating: 4.6,
+        eta: '20-30 min',
+        destinations: ['Other Medical Facility'],
+        specialties: ['medical appointment - need extra time'],
+        icon: 'fas fa-clock',
+        color: '#0ea5e9',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver11',
+        name: 'Rina Salwani',
+        vehicle: 'Perodua Alza (Red)',
+        rating: 4.8,
+        eta: '10-15 min',
+        destinations: ['Mosque'],
+        specialties: ['female driver', 'quiet ride', 'child car seat needed'],
+        icon: 'fas fa-female',
+        color: '#f43f5e',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver12',
+        name: 'Samuel Raj',
+        vehicle: 'Proton Persona (Grey)',
+        rating: 4.5,
+        eta: '18-22 min',
+        destinations: ['Market'],
+        specialties: ['heavy luggage assistance', 'elderly care'],
+        icon: 'fas fa-briefcase',
+        color: '#d97706',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver13',
+        name: 'Ayu Zulaikha',
+        vehicle: 'Kia Picanto (Yellow)',
+        rating: 4.9,
+        eta: '7-10 min',
+        destinations: ['Kuala Lumpur Hospital'],
+        specialties: ['female driver', 'wheelchair accessible'],
+        icon: 'fas fa-heartbeat',
+        color: '#fde047',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver14',
+        name: 'Izzat Hakim',
+        vehicle: 'Proton Exora (Blue)',
+        rating: 4.3,
+        eta: '22-28 min',
+        destinations: ['Other'],
+        specialties: ['quiet ride', 'medical appointment - need extra time'],
+        icon: 'fas fa-notes-medical',
+        color: '#3b82f6',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver15',
+        name: 'Nora Abdullah',
+        vehicle: 'Toyota Yaris (Pink)',
+        rating: 4.8,
+        eta: '11-16 min',
+        destinations: ['Hospital Selayang'],
+        specialties: ['female driver'],
+        icon: 'fas fa-car',
+        color: '#f472b6',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver16',
+        name: 'Kumar Ramesh',
+        vehicle: 'Suzuki Ertiga (Silver)',
+        rating: 4.4,
+        eta: '15-20 min',
+        destinations: ['Institut Jantung Negara (IJN)'],
+        specialties: ['extra time assistance', 'heavy luggage assistance'],
+        icon: 'fas fa-clock',
+        color: '#64748b',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver17',
+        name: 'Zainab Mahmud',
+        vehicle: 'Nissan Serena (White)',
+        rating: 4.9,
+        eta: '10-14 min',
+        destinations: ['Other Medical Facility'],
+        specialties: ['child car seat needed', 'female driver'],
+        icon: 'fas fa-child',
+        color: '#facc15',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver18',
+        name: 'Wong Chee Wah',
+        vehicle: 'Toyota Camry (Black)',
+        rating: 4.2,
+        eta: '20-25 min',
+        destinations: ['Mosque'],
+        specialties: ['quiet ride'],
+        icon: 'fas fa-moon',
+        color: '#1e293b',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver19',
+        name: 'Faizah Zulkifli',
+        vehicle: 'Perodua Aruz (Green)',
+        rating: 4.6,
+        eta: '13-17 min',
+        destinations: ['Market'],
+        specialties: ['female driver', 'elderly care'],
+        icon: 'fas fa-hand-holding-heart',
+        color: '#84cc16',
+        baseFare: 7.00,
+        perKm: 1.00
+    },
+    {
+        id: 'driver20',
+        name: 'Syed Hassan',
+        vehicle: 'Mazda CX-5 (Grey)',
+        rating: 4.7,
+        eta: '16-20 min',
+        destinations: ['Kuala Lumpur Hospital'],
+        specialties: ['wheelchair accessible', 'extra time assistance'],
+        icon: 'fas fa-plus-circle',
+        color: '#c084fc',
+        baseFare: 7.00,
+        perKm: 1.00
+    }
+];
+
+
+            // Elements
+            const findRideBtn = document.getElementById('findRideBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const rideResults = document.getElementById('rideResults');
+            const driverList = document.getElementById('driverList');
+            const noDriversFound = document.getElementById('noDriversFound');
+            const rideTracking = document.getElementById('rideTracking');
+            const historyList = document.getElementById('historyList');
+            
+            // Modal elements
+            const rideDetailsModal = document.getElementById('rideDetailsModal');
+            const rideConfirmedModal = document.getElementById('rideConfirmedModal');
+            const closeDetailsModal = document.getElementById('closeDetailsModal');
+            const closeConfirmedModalBtn = document.getElementById('closeConfirmedModalBtn');
+            const confirmRideBtn = document.getElementById('confirmRideBtn');
+            const cancelRideBtn = document.getElementById('cancelRideBtn');
+            
+            // History data (simulated)
+            const rideHistory = [
+                {
+                    date: 'June 8, 2023 10:30 AM',
+                    from: 'Home Address',
+                    to: 'Hospital Selayang',
+                    price: 'RM 14.50'
+                },
+                {
+                    date: 'June 5, 2023 2:15 PM',
+                    from: 'Home Address',
+                    to: 'Institut Jantung Negara',
+                    price: 'RM 22.80'
+                },
+                {
+                    date: 'June 1, 2023 9:00 AM',
+                    from: 'Home Address',
+                    to: 'Kuala Lumpur Hospital',
+                    price: 'RM 18.20'
+                }
+            ];
+            
+            // Initialize the app
+            function initApp() {
+                renderRideHistory();
+                setupEventListeners();
+            }
+            
+            // Render ride history
+            function renderRideHistory() {
+                historyList.innerHTML = '';
+                
+                rideHistory.forEach(ride => {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    historyItem.innerHTML = `
+                        <div class="history-date">${ride.date}</div>
+                        <div class="history-locations">
+                            <div class="history-from">
+                                <div><i class="fas fa-circle" style="color: #3b82f6; font-size: 0.8rem;"></i> From</div>
+                                <div>${ride.from}</div>
+                            </div>
+                            <div><i class="fas fa-arrow-right" style="color: var(--text-gray);"></i></div>
+                            <div class="history-to">
+                                <div><i class="fas fa-map-marker-alt" style="color: #ef4444; font-size: 0.8rem;"></i> To</div>
+                                <div>${ride.to}</div>
+                            </div>
+                        </div>
+                        <div class="history-price">${ride.price}</div>
+                    `;
+                    historyList.appendChild(historyItem);
+                });
+            }
+            
+            // Setup event listeners
+            function setupEventListeners() {
+                // Find ride button
+                findRideBtn.addEventListener('click', findAvailableRides);
+                
+                // Modal controls
+                closeDetailsModal.addEventListener('click', () => toggleModal(rideDetailsModal, false));
+                closeConfirmedModalBtn.addEventListener('click', () => {
+                    toggleModal(rideConfirmedModal, false);
+                    rideTracking.style.display = 'block';
+                    rideResults.style.display = 'none';
+                });
+                
+                // Confirm ride
+                confirmRideBtn.addEventListener('click', confirmRide);
+                
+                // Cancel ride
+                if(cancelRideBtn) {
+                    cancelRideBtn.addEventListener('click', () => {
+                        rideTracking.style.display = 'none';
+                        rideResults.style.display = 'block';
+                    });
+                }
+                
+                // Tab switching
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.addEventListener('click', function() {
+                        const tabName = this.dataset.tab;
+                        
+                        // Update active tab
+                        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        // Show corresponding content
+                        document.querySelectorAll('.tab-content').forEach(content => {
+                            content.classList.remove('active');
+                        });
+                        document.getElementById(`${tabName}Tab`).classList.add('active');
+                    });
+                });
+                
+                // Get location button
+                document.getElementById('getLocationBtn').addEventListener('click', getCurrentLocation);
+            }
+            
+            // Toggle modal visibility
+            function toggleModal(modal, show) {
+                if(show) {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }
+            
+            // Get current location
+            function getCurrentLocation() {
+                const locationInput = document.getElementById('pickupLocation');
+                const btn = document.getElementById('getLocationBtn');
+                
+                // Simulate getting location
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                setTimeout(() => {
+                    locationInput.value = "Current Location";
+                    btn.innerHTML = '<i class="fas fa-location-arrow"></i>';
+                    
+                    // Show notification
+                    showNotification('Location updated successfully!');
+                }, 1500);
+            }
+            
+            // Find available rides
+            function findAvailableRides() {
+                const destination = document.getElementById('destination').value;
+                
+                if (!destination) {
+                    showNotification('Please select a destination!', 'error');
+                    return;
+                }
+                
+                // Show loading state
+                findRideBtn.disabled = true;
+                loadingSpinner.style.display = 'inline-block';
+                
+                // Hide previous results
+                rideResults.style.display = 'none';
+                noDriversFound.style.display = 'none';
+                driverList.innerHTML = '';
+                
+                // Simulate API call
+                setTimeout(() => {
+                    const matchingDrivers = simulatedDrivers.filter(driver => 
+                        driver.destinations.includes(destination)
+                    );
+                    
+                    // Hide loading state
+                    loadingSpinner.style.display = 'none';
+                    findRideBtn.disabled = false;
+                    rideResults.style.display = 'block';
+                    
+                    if (matchingDrivers.length > 0) {
+                        matchingDrivers.forEach(driver => {
+                            // Calculate price estimate
+                            const minDistance = 5;
+                            const maxDistance = 15;
+                            const minPrice = (driver.baseFare + driver.perKm * minDistance).toFixed(2);
+                            const maxPrice = (driver.baseFare + driver.perKm * maxDistance).toFixed(2);
+                            
+                            const driverCard = document.createElement('div');
+                            driverCard.className = 'driver-card';
+                            driverCard.innerHTML = `
+                                <div class="driver-header">
+                                    <div class="driver-info">
+                                        <div class="driver-icon" style="background: rgba(${hexToRgb(driver.color)}, 0.2); color: ${driver.color}">
+                                            <i class="${driver.icon}"></i>
+                                        </div>
+                                        <div>
+                                            <div class="driver-name">${driver.name}</div>
+                                            <div class="driver-rating">
+                                                <i class="fas fa-star"></i> ${driver.rating}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="driver-eta">${driver.eta}</div>
+                                </div>
+                                
+                                <div class="driver-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-car" style="color: ${driver.color}"></i>
+                                        <div>
+                                            <div>Vehicle</div>
+                                            <div class="detail-value">${driver.vehicle}</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-road" style="color: ${driver.color}"></i>
+                                        <div>
+                                            <div>Distance</div>
+                                            <div class="detail-value">5-15 km</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="price-estimate">
+                                    <i class="fas fa-tag"></i> RM ${minPrice} - RM ${maxPrice}
+                                </div>
+                                
+                                ${driver.specialties.length > 0 ? `
+                                <div class="specialties">
+                                    ${driver.specialties.map(specialty => `
+                                        <div class="specialty">
+                                            <i class="fas fa-check-circle"></i> ${specialty}
+                                        </div>
+                                    `).join('')}
+                                </div>` : ''}
+                                
+                                <button class="btn btn-secondary" style="margin-top: 15px;" 
+                                    data-driver-id="${driver.id}" data-driver-name="${driver.name}">
+                                    <i class="fas fa-car"></i> Select Driver
+                                </button>
+                            `;
+                            driverList.appendChild(driverCard);
+                        });
+                        
+                        // Add event listeners to driver select buttons
+                        document.querySelectorAll('[data-driver-id]').forEach(button => {
+                            button.addEventListener('click', function() {
+                                const driverId = this.dataset.driverId;
+                                const driverName = this.dataset.driverName;
+                                const driver = simulatedDrivers.find(d => d.id === driverId);
+                                
+                                if (driver) {
+                                    // Update modal with driver details
+                                    document.getElementById('modalDriverName').textContent = driver.name;
+                                    document.getElementById('modalVehicle').textContent = driver.vehicle;
+                                    document.getElementById('modalETA').textContent = driver.eta;
+                                    document.getElementById('modalPickup').textContent = document.getElementById('pickupLocation').value;
+                                    document.getElementById('modalDestination').textContent = document.getElementById('destination').value;
+                                    
+                                    // Calculate price estimate
+                                    const distance = 8; // average distance for demo
+                                    const price = (driver.baseFare + driver.perKm * distance).toFixed(2);
+                                    document.getElementById('modalPrice').textContent = `RM ${price}`;
+                                    
+                                    // Show modal
+                                    toggleModal(rideDetailsModal, true);
+                                }
+                            });
+                        });
+                    } else {
+                        noDriversFound.style.display = 'block';
+                    }
+                }, 2000);
+            }
+            
+            // Confirm ride
+            function confirmRide() {
+                const driverName = document.getElementById('modalDriverName').textContent;
+                
+                // Hide details modal
+                toggleModal(rideDetailsModal, false);
+                
+                // Update confirmation modal
+                document.getElementById('confirmedDriverName').textContent = driverName;
+                
+                // Show confirmation modal
+                toggleModal(rideConfirmedModal, true);
+            }
+            
+            // Show notification
+            function showNotification(message, type = 'success') {
+                // In a real app, this would show a nice notification
+                alert(message);
+            }
+            
+            // Helper function to convert hex to rgb
+            function hexToRgb(hex) {
+                const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                return result ? 
+                    `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` 
+                    : '0, 0, 0';
+            }
+            
+            // Initialize the app
+            initApp();
+        });
+    </script>
+</body>
+</html>
