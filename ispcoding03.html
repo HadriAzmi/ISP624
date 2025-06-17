@@ -1,0 +1,1662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tumpanggg Ride - Medical & Essential Carpooling</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --dark-bg-1: #0f0f23;
+            --dark-bg-2: #1a1a2e;
+            --dark-bg-3: #16213e;
+            --neon-blue: #3b82f6;
+            --neon-green: #10b981;
+            --neon-purple: #8b5cf6;
+            --neon-pink: #ec4899;
+            --neon-cyan: #06b6d4;
+            --text-light: #e0e6ff;
+            --text-gray: #9ca3af;
+            --emergency-red: #ef4444;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--dark-bg-1) 0%, var(--dark-bg-2) 50%, var(--dark-bg-3) 100%);
+            color: var(--text-light);
+            min-height: 100vh;
+            line-height: 1.6;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(139, 92, 246, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(59, 130, 246, 0.1) 0%, transparent 20%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 30px 20px;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .logo {
+            font-size: 2.8rem;
+            font-weight: 800;
+            background: linear-gradient(90deg, var(--neon-purple), var(--neon-blue));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 15px rgba(139, 92, 246, 0.5);
+            margin-bottom: 10px;
+        }
+        
+        .tagline {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 350px;
+            gap: 30px;
+        }
+        
+        @media (max-width: 900px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .card {
+            background: rgba(26, 26, 46, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 16px;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(139, 92, 246, 0.4);
+        }
+        
+        .card-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            color: var(--neon-purple);
+            text-shadow: 0 0 10px rgba(139, 92, 246, 0.5);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .card-title i {
+            font-size: 1.5rem;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 600;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .input-group {
+            display: flex;
+            gap: 10px;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 14px 20px;
+            background: rgba(15, 15, 35, 0.6);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--neon-purple);
+            box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.3);
+        }
+        
+        .location-btn {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            padding: 0 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 50px;
+        }
+        
+        .location-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 20px rgba(139, 92, 246, 0.5);
+        }
+        
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 16px;
+            border-radius: 12px;
+            border: none;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-blue), var(--neon-purple));
+            color: white;
+            box-shadow: 0 5px 15px rgba(59, 130, 246, 0.4);
+        }
+        
+        .btn-primary:hover {
+            background: linear-gradient(135deg, #2563eb, #7c3aed);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.6);
+            transform: translateY(-3px);
+        }
+        
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-light);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+        
+        .btn-emergency {
+            background: linear-gradient(135deg, var(--emergency-red), #dc2626);
+            color: white;
+            animation: pulse-emergency 1.5s infinite;
+        }
+        
+        .driver-card {
+            background: rgba(15, 15, 35, 0.5);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .driver-card:hover {
+            background: rgba(26, 26, 46, 0.7);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.3);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+        
+        .driver-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--neon-purple);
+        }
+        
+        .driver-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .driver-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .driver-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            background: rgba(139, 92, 246, 0.2);
+        }
+        
+        .driver-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--neon-blue);
+        }
+        
+        .driver-rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            color: #fbbf24;
+            font-weight: 600;
+        }
+        
+        .driver-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .detail-value {
+            font-weight: 600;
+        }
+        
+        .seats-available {
+            background: rgba(16, 185, 129, 0.15);
+            border-radius: 10px;
+            padding: 12px 15px;
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--neon-green);
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .specialties {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .specialty {
+            background: rgba(139, 92, 246, 0.2);
+            color: var(--neon-purple);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .tracking-container {
+            position: relative;
+            height: 180px;
+            background: rgba(15, 15, 35, 0.5);
+            border-radius: 14px;
+            margin: 20px 0;
+            overflow: hidden;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+        }
+        
+        .map-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(26, 26, 46, 0.7), rgba(26, 26, 46, 0.9)), 
+                        url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="rgba(139, 92, 246, 0.2)" stroke-width="0.5"/></svg>');
+            background-size: 20px 20px;
+        }
+        
+        .driver-marker {
+            position: absolute;
+            top: 30%;
+            left: 20%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: var(--neon-purple);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px var(--neon-purple);
+            animation: pulse 2s infinite;
+        }
+        
+        .user-marker {
+            position: absolute;
+            top: 70%;
+            left: 80%;
+            transform: translate(-50%, -50%);
+            width: 30px;
+            height: 30px;
+            background: var(--neon-blue);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px var(--neon-blue);
+        }
+        
+        .route-line {
+            position: absolute;
+            top: 30%;
+            left: 20%;
+            width: 60%;
+            height: 2px;
+            background: var(--neon-green);
+            transform-origin: left center;
+            transform: rotate(30deg);
+            box-shadow: 0 0 10px var(--neon-green);
+        }
+        
+        .tracking-info {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+        
+        .info-card {
+            background: rgba(15, 15, 35, 0.5);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            flex: 1;
+            margin: 0 10px;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+        
+        .info-value {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 5px 0;
+            color: var(--neon-cyan);
+        }
+        
+        .info-label {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+        }
+        
+        .history-list {
+            margin-top: 20px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        
+        .history-item {
+            background: rgba(15, 15, 35, 0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-left: 4px solid var(--neon-purple);
+        }
+        
+        .history-date {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 5px;
+        }
+        
+        .history-locations {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+        }
+        
+        .history-from, .history-to {
+            flex: 1;
+            padding: 10px;
+            background: rgba(26, 26, 46, 0.5);
+            border-radius: 8px;
+        }
+        
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 15, 35, 0.95);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: rgba(26, 26, 46, 0.95);
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.4s ease;
+        }
+        
+        .modal.active .modal-content {
+            transform: translateY(0);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-gray);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        
+        .close-modal:hover {
+            color: var(--neon-pink);
+        }
+        
+        .modal-title {
+            font-size: 1.8rem;
+            color: var(--neon-purple);
+            margin-bottom: 25px;
+            text-align: center;
+        }
+        
+        .loading {
+            display: inline-block;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(139, 92, 246, 0.3);
+            border-radius: 50%;
+            border-top-color: var(--neon-purple);
+            animation: spin 1s linear infinite;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+        
+        .tab-container {
+            display: flex;
+            margin-bottom: 25px;
+            background: rgba(15, 15, 35, 0.5);
+            border-radius: 12px;
+            padding: 5px;
+        }
+        
+        .tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, var(--neon-purple), var(--neon-blue));
+            box-shadow: 0 5px 15px rgba(139, 92, 246, 0.4);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .confirmation-icon {
+            text-align: center;
+            font-size: 4rem;
+            color: var(--neon-green);
+            margin: 20px 0;
+            animation: pulse 2s infinite;
+        }
+        
+        .seats-indicator {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .seat {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+        }
+        
+        .seat-available {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: var(--neon-green);
+            border: 2px solid var(--neon-green);
+        }
+        
+        .seat-taken {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #ef4444;
+            border: 2px solid #ef4444;
+        }
+        
+        .passenger-count {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .passenger-count-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .passenger-count-btn {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(139, 92, 246, 0.2);
+            border: none;
+            color: var(--neon-purple);
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .passenger-count-value {
+            min-width: 30px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .route-visualization {
+            margin: 20px 0;
+            padding: 15px;
+            background: rgba(15, 15, 35, 0.5);
+            border-radius: 12px;
+        }
+        
+        .route-stop {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            padding: 8px 12px;
+            background: rgba(26, 26, 46, 0.5);
+            border-radius: 8px;
+        }
+        
+        .route-stop i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .verification-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-left: 8px;
+        }
+        
+        .badge-medical {
+            background: rgba(220, 38, 38, 0.2);
+            color: #dc2626;
+            border: 1px solid #dc2626;
+        }
+        
+        .badge-trusted {
+            background: rgba(234, 179, 8, 0.2);
+            color: #eab308;
+            border: 1px solid #eab308;
+        }
+        
+        .badge-certified {
+            background: rgba(16, 185, 129, 0.2);
+            color: #10b981;
+            border: 1px solid #10b981;
+        }
+        
+        .emergency-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--emergency-red);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            box-shadow: 0 5px 20px rgba(239, 68, 68, 0.5);
+            z-index: 100;
+            cursor: pointer;
+            animation: pulse-emergency 1.5s infinite;
+        }
+        
+        .recurring-options {
+            margin: 15px 0;
+        }
+        
+        .recurring-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .recurring-option:hover {
+            background: rgba(139, 92, 246, 0.2);
+        }
+        
+        .recurring-option input {
+            width: auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        @keyframes pulse-emergency {
+            0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); }
+            70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
+            100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
+        }
+        
+        /* Accessibility improvements */
+        input:focus, select:focus, button:focus {
+            outline: 2px solid var(--neon-cyan);
+            outline-offset: 2px;
+        }
+        
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+        
+        /* Improved contrast */
+        .driver-name, .seats-available, .info-value {
+            color: #60a5fa;
+        }
+        
+        .text-light {
+            color: #f3f4f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">Tumpanggg Ride</h1>
+            <p class="tagline">Community carpooling for medical and essential journeys</p>
+        </header>
+
+        <div class="main-content">
+            <div class="main-panel">
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-car"></i> Find a Carpool</h2>
+                    
+                    <div class="form-group">
+                        <label for="pickupLocation"><i class="fas fa-map-marker-alt"></i> Pickup Location</label>
+                        <div class="input-group">
+                            <input type="text" id="pickupLocation" value="Your Current Location" aria-label="Pickup location">
+                            <button class="location-btn" id="getLocationBtn" aria-label="Get current location">
+                                <i class="fas fa-location-arrow"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="destination"><i class="fas fa-flag"></i> Destination</label>
+                        <select id="destination" aria-label="Select destination">
+                            <option value="">Select a destination</option>
+                            <option value="Hospital Selayang">🏥 Hospital Selayang</option>
+                            <option value="Institut Jantung Negara (IJN)">❤️ Institut Jantung Negara (IJN)</option>
+                            <option value="Kuala Lumpur Hospital">🏥 Kuala Lumpur Hospital</option>
+                            <option value="Other Medical Facility">⚕️ Other Medical Facility</option>
+                            <option value="Mosque">🕌 Mosque</option>
+                            <option value="Market">🛍️ Market</option>
+                            <option value="Other">📍 Other Location</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="passengerCount"><i class="fas fa-users"></i> Number of Passengers</label>
+                        <div class="passenger-count">
+                            <div class="passenger-count-controls">
+                                <button class="passenger-count-btn" id="decreasePassengers">-</button>
+                                <div class="passenger-count-value" id="passengerCount">1</div>
+                                <button class="passenger-count-btn" id="increasePassengers">+</button>
+                            </div>
+                            <span id="passengerLabel">passenger</span>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-calendar-alt"></i> Trip Schedule</label>
+                        <div class="recurring-options">
+                            <div class="recurring-option">
+                                <input type="radio" id="oneTime" name="tripType" value="oneTime" checked>
+                                <label for="oneTime">One-time trip</label>
+                            </div>
+                            <div class="recurring-option">
+                                <input type="radio" id="recurring" name="tripType" value="recurring">
+                                <label for="recurring">Recurring trip</label>
+                            </div>
+                        </div>
+                        <div id="recurringOptions" style="display: none;">
+                            <select id="recurringPattern" style="margin-top: 10px;">
+                                <option value="daily">Daily</option>
+                                <option value="weekly">Weekly (same day)</option>
+                                <option value="monthly">Monthly (same date)</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="notes"><i class="fas fa-stethoscope"></i> Special Requirements</label>
+                        <select id="notes" aria-label="Select special requirements">
+                            <option value="">No special requirements</option>
+                            <option value="wheelchair">♿ Wheelchair accessible vehicle needed</option>
+                            <option value="elderly">👴 Assistance for elderly passenger</option>
+                            <option value="medical">🏥 Medical appointment - need extra time</option>
+                            <option value="luggage">🧳 Heavy luggage assistance</option>
+                            <option value="female-driver">👩 Prefer female driver</option>
+                            <option value="quiet">🤫 Prefer quiet ride</option>
+                            <option value="child-seat">👶 Child car seat needed</option>
+                        </select>
+                    </div>
+                    
+                    <button id="findRideBtn" class="btn btn-primary">
+                        <i class="fas fa-search"></i> Find Available Carpools
+                        <span id="loadingSpinner" class="loading" style="display: none;"></span>
+                    </button>
+                </div>
+                
+                <div class="card" id="rideResults" style="display: none; margin-top: 30px;">
+                    <h2 class="card-title"><i class="fas fa-users"></i> Available Carpools</h2>
+                    <div id="driverList">
+                        <!-- Driver cards will be inserted here -->
+                    </div>
+                    <p id="noDriversFound" class="text-center" style="display: none; padding: 20px;">
+                        <i class="fas fa-exclamation-circle"></i> No carpools found for your destination at this time. Please try again later.
+                    </p>
+                </div>
+                
+                <div class="card" id="rideTracking" style="display: none; margin-top: 30px;">
+                    <h2 class="card-title"><i class="fas fa-map-marked-alt"></i> Ride in Progress</h2>
+                    
+                    <div class="tracking-container">
+                        <div class="map-overlay">
+                            <div class="driver-marker">
+                                <i class="fas fa-car"></i>
+                            </div>
+                            <div class="user-marker">
+                                <i class="fas fa-user"></i>
+                            </div>
+                            <div class="route-line"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="tracking-info">
+                        <div class="info-card">
+                            <div class="info-value" id="trackingETA">12 min</div>
+                            <div class="info-label">Estimated Arrival</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-value" id="trackingDistance">4.2 km</div>
+                            <div class="info-label">Distance</div>
+                        </div>
+                        <div class="info-card">
+                            <div class="info-value" id="trackingSeats">2/3</div>
+                            <div class="info-label">Seats Available</div>
+                        </div>
+                    </div>
+                    
+                    <button id="cancelRideBtn" class="btn btn-secondary" style="margin-top: 20px;">
+                        <i class="fas fa-times"></i> Cancel Ride
+                    </button>
+                    
+                    <button id="emergencyBtn" class="btn btn-emergency" style="margin-top: 10px;">
+                        <i class="fas fa-bell"></i> Emergency Assistance
+                    </button>
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-history"></i> Ride History</h2>
+                    <div class="history-list" id="historyList">
+                        <!-- History items will be inserted here -->
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-info-circle"></i> How It Works</h2>
+                    <ul style="padding-left: 20px; margin-top: 15px;">
+                        <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle" style="color: var(--neon-green);"></i> Free community carpooling
+                        </li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle" style="color: var(--neon-green);"></i> Each car has 3 available seats
+                        </li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle" style="color: var(--neon-green);"></i> Verified drivers and passengers
+                        </li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle" style="color: var(--neon-green);"></i> Priority for medical needs
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="card">
+                    <h2 class="card-title"><i class="fas fa-shield-alt"></i> Safety Features</h2>
+                    <ul style="padding-left: 20px; margin-top: 15px;">
+                        <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle" style="color: var(--neon-green);"></i> Driver background checks
+                        </li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle" style="color: var(--neon-green);"></i> Real-time tracking
+                        </li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle" style="color: var(--neon-green);"></i> Emergency contact sharing
+                        </li>
+                        <li style="margin-bottom: 10px; display: flex; align-items: center; gap: 10px;">
+                            <i class="fas fa-check-circle" style="color: var(--neon-green);"></i> Vehicle sanitization
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ride Details Modal -->
+    <div class="modal" id="rideDetailsModal">
+        <div class="modal-content">
+            <button class="close-modal" id="closeDetailsModal">&times;</button>
+            <h2 class="modal-title">Confirm Your Carpool</h2>
+            
+            <div class="tab-container">
+                <div class="tab active" data-tab="details">Details</div>
+                <div class="tab" data-tab="seats">Seat Availability</div>
+                <div class="tab" data-tab="route">Route</div>
+            </div>
+            
+            <div class="tab-content active" id="detailsTab">
+                <div style="margin-bottom: 25px;">
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <div class="driver-icon" style="width: 60px; height: 60px; font-size: 1.8rem;">
+                            <i class="fas fa-user"></i>
+                        </div>
+                        <div>
+                            <div class="driver-name" id="modalDriverName">Driver Name 
+                                <span class="verification-badge badge-medical">
+                                    <i class="fas fa-user-md"></i> MD Verified
+                                </span>
+                            </div>
+                            <div class="driver-rating">
+                                <i class="fas fa-star"></i> 4.8 (128 rides)
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <div style="font-size: 0.9rem; color: var(--text-gray);">Vehicle</div>
+                            <div class="text-light" id="modalVehicle">Perodua Myvi (White)</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.9rem; color: var(--text-gray);">License Plate</div>
+                            <div class="text-light">ABC 1234</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.9rem; color: var(--text-gray);">Estimated Arrival</div>
+                            <div class="text-light" id="modalETA">10-15 min</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 0.9rem; color: var(--text-gray);">Seats Available</div>
+                            <div class="text-light" id="modalSeats">2/3</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin: 20px 0;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <div style="font-weight: 600;">Pickup:</div>
+                        <div class="text-light" id="modalPickup">Your Location</div>
+                    </div>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="font-weight: 600;">Destination:</div>
+                        <div class="text-light" id="modalDestination">Hospital Selayang</div>
+                    </div>
+                </div>
+                
+                <div style="margin-bottom: 20px;">
+                    <div style="font-weight: 600; margin-bottom: 10px;">Passengers:</div>
+                    <div class="text-light" id="modalPassengers">1 passenger</div>
+                </div>
+                
+                <button id="confirmRideBtn" class="btn btn-primary">
+                    <i class="fas fa-check"></i> Confirm Carpool
+                </button>
+            </div>
+            
+            <div class="tab-content" id="seatsTab">
+                <!-- Seat availability content will be inserted here -->
+            </div>
+            
+            <div class="tab-content" id="routeTab">
+                <div style="margin: 20px 0;">
+                    <div class="route-visualization">
+                        <div class="route-stop">
+                            <i class="fas fa-home" style="color: var(--neon-purple);"></i>
+                            <span>Driver's Home - Taman Melati</span>
+                        </div>
+                        <div class="route-stop">
+                            <i class="fas fa-arrow-down" style="color: var(--neon-blue);"></i>
+                            <span>Pickup Point - Your Location</span>
+                        </div>
+                        <div class="route-stop">
+                            <i class="fas fa-hospital" style="color: var(--emergency-red);"></i>
+                            <span>Hospital Selayang</span>
+                        </div>
+                    </div>
+                    <div style="margin-top: 15px; color: var(--text-gray);">
+                        <i class="fas fa-info-circle"></i> Total distance: approximately 8.5km
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ride Confirmed Modal -->
+    <div class="modal" id="rideConfirmedModal">
+        <div class="modal-content">
+            <div class="confirmation-icon">
+                <i class="fas fa-check-circle"></i>
+            </div>
+            <h2 class="modal-title">Carpool Confirmed!</h2>
+            
+            <div style="text-align: center; margin: 25px 0;">
+                <p style="margin-bottom: 15px; font-size: 1.1rem;">
+                    Your driver <span class="text-light" id="confirmedDriverName">Ahmad bin Omar</span> is on the way to your location.
+                </p>
+                <p style="color: var(--text-gray);">
+                    <i class="fas fa-car"></i> White Perodua Myvi • ABC 1234
+                </p>
+                <div class="seats-available" style="margin: 20px auto; max-width: 200px;">
+                    <i class="fas fa-chair"></i> 2/3 Seats Available
+                </div>
+                
+                <div style="background: rgba(15, 15, 35, 0.5); border-radius: 12px; padding: 15px; margin-top: 20px;">
+                    <div style="font-weight: 600; margin-bottom: 10px;">Next Steps:</div>
+                    <ul style="text-align: left; padding-left: 20px;">
+                        <li style="margin-bottom: 8px;">Driver will arrive in approximately 12 minutes</li>
+                        <li style="margin-bottom: 8px;">You can message the driver if needed</li>
+                        <li>Emergency button is available during the ride</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <button id="closeConfirmedModalBtn" class="btn btn-primary">
+                <i class="fas fa-thumbs-up"></i> Got It!
+            </button>
+        </div>
+    </div>
+
+    <!-- Emergency Modal -->
+    <div class="modal" id="emergencyModal">
+        <div class="modal-content">
+            <h2 class="modal-title" style="color: var(--emergency-red);">
+                <i class="fas fa-exclamation-triangle"></i> Emergency Assistance
+            </h2>
+            
+            <div style="text-align: center; margin: 25px 0;">
+                <div style="font-size: 4rem; color: var(--emergency-red); margin-bottom: 20px;">
+                    <i class="fas fa-bell"></i>
+                </div>
+                <p style="margin-bottom: 15px; font-size: 1.1rem;">
+                    Emergency contacts have been notified with your location.
+                </p>
+                <p style="color: var(--text-gray); margin-bottom: 20px;">
+                    Help is on the way. Please stay on the line.
+                </p>
+                
+                <div style="background: rgba(239, 68, 68, 0.1); border-radius: 12px; padding: 15px; margin: 20px 0;">
+                    <div style="font-weight: 600; margin-bottom: 10px;">Nearest Emergency Services:</div>
+                    <ul style="text-align: left; padding-left: 20px;">
+                        <li style="margin-bottom: 8px;">Hospital Kuala Lumpur - 1.2km away</li>
+                        <li style="margin-bottom: 8px;">Police Station - 0.8km away</li>
+                        <li>Emergency Contact: +603-1234567</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <button id="closeEmergencyModalBtn" class="btn btn-emergency">
+                <i class="fas fa-phone"></i> Call Emergency Services
+            </button>
+            
+            <button id="cancelEmergencyBtn" class="btn btn-secondary" style="margin-top: 10px;">
+                <i class="fas fa-times"></i> Cancel Emergency
+            </button>
+        </div>
+    </div>
+
+    <!-- Emergency Button -->
+    <div class="emergency-btn" id="floatingEmergencyBtn">
+        <i class="fas fa-bell"></i>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulated driver data
+            const simulatedDrivers = [
+                {
+                    id: 'driver1',
+                    name: 'Ahmad bin Omar',
+                    vehicle: 'Perodua Myvi (White)',
+                    rating: 4.8,
+                    eta: '10-15 min',
+                    destinations: ['Hospital Selayang'],
+                    specialties: ['Wheelchair Accessible', 'Patient Transport'],
+                    icon: 'fas fa-user-md',
+                    color: '#3b82f6',
+                    seatsAvailable: 2,
+                    totalSeats: 3,
+                    verified: 'medical',
+                    route: {
+                        stops: [
+                            { type: 'home', location: 'Taman Melati' },
+                            { type: 'pickup', location: 'Your Location' },
+                            { type: 'destination', location: 'Hospital Selayang' }
+                        ],
+                        distance: '8.5km'
+                    }
+                },
+                {
+                    id: 'driver2',
+                    name: 'Siti binti Abdullah',
+                    vehicle: 'Honda City (Silver)',
+                    rating: 4.9,
+                    eta: '15-20 min',
+                    destinations: ['Institut Jantung Negara (IJN)'],
+                    specialties: ['Elderly Care', 'Extra Time Assistance', 'Female Driver'],
+                    icon: 'fas fa-user-nurse',
+                    color: '#ec4899',
+                    seatsAvailable: 1,
+                    totalSeats: 3,
+                    verified: 'trusted',
+                    route: {
+                        stops: [
+                            { type: 'home', location: 'Setapak' },
+                            { type: 'pickup', location: 'Your Location' },
+                            { type: 'destination', location: 'Institut Jantung Negara' }
+                        ],
+                        distance: '12km'
+                    }
+                },
+                {
+                    id: 'driver3',
+                    name: 'Lim Wei Ming',
+                    vehicle: 'Proton Saga (Blue)',
+                    rating: 4.5,
+                    eta: '20-25 min',
+                    destinations: ['Other Medical Facility'],
+                    specialties: ['Quiet Ride'],
+                    icon: 'fas fa-car',
+                    color: '#06b6d4',
+                    seatsAvailable: 3,
+                    totalSeats: 3,
+                    verified: 'certified',
+                    route: {
+                        stops: [
+                            { type: 'home', location: 'Kepong' },
+                            { type: 'pickup', location: 'Your Location' },
+                            { type: 'destination', location: 'Kuala Lumpur Hospital' }
+                        ],
+                        distance: '15km'
+                    }
+                }
+            ];
+
+            // Elements
+            const findRideBtn = document.getElementById('findRideBtn');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            const rideResults = document.getElementById('rideResults');
+            const driverList = document.getElementById('driverList');
+            const noDriversFound = document.getElementById('noDriversFound');
+            const rideTracking = document.getElementById('rideTracking');
+            const historyList = document.getElementById('historyList');
+            const passengerCount = document.getElementById('passengerCount');
+            const passengerLabel = document.getElementById('passengerLabel');
+            const increasePassengers = document.getElementById('increasePassengers');
+            const decreasePassengers = document.getElementById('decreasePassengers');
+            const oneTimeTrip = document.getElementById('oneTime');
+            const recurringTrip = document.getElementById('recurring');
+            const recurringOptions = document.getElementById('recurringOptions');
+            
+            // Modal elements
+            const rideDetailsModal = document.getElementById('rideDetailsModal');
+            const rideConfirmedModal = document.getElementById('rideConfirmedModal');
+            const emergencyModal = document.getElementById('emergencyModal');
+            const closeDetailsModal = document.getElementById('closeDetailsModal');
+            const closeConfirmedModalBtn = document.getElementById('closeConfirmedModalBtn');
+            const closeEmergencyModalBtn = document.getElementById('closeEmergencyModalBtn');
+            const confirmRideBtn = document.getElementById('confirmRideBtn');
+            const cancelRideBtn = document.getElementById('cancelRideBtn');
+            const cancelEmergencyBtn = document.getElementById('cancelEmergencyBtn');
+            const floatingEmergencyBtn = document.getElementById('floatingEmergencyBtn');
+            const emergencyBtn = document.getElementById('emergencyBtn');
+            
+            // History data (simulated)
+            const rideHistory = [
+                {
+                    date: 'June 8, 2023 10:30 AM',
+                    from: 'Home Address',
+                    to: 'Hospital Selayang',
+                    seats: '2 passengers',
+                    driver: 'Ahmad bin Omar'
+                },
+                {
+                    date: 'June 5, 2023 2:15 PM',
+                    from: 'Home Address',
+                    to: 'Institut Jantung Negara',
+                    seats: '1 passenger',
+                    driver: 'Siti binti Abdullah'
+                },
+                {
+                    date: 'June 1, 2023 9:00 AM',
+                    from: 'Home Address',
+                    to: 'Kuala Lumpur Hospital',
+                    seats: '3 passengers',
+                    driver: 'Lim Wei Ming'
+                }
+            ];
+            
+            // Initialize the app
+            function initApp() {
+                renderRideHistory();
+                setupEventListeners();
+                updatePassengerLabel();
+                
+                // Initially hide floating emergency button
+                floatingEmergencyBtn.style.display = 'none';
+            }
+            
+            // Render ride history
+            function renderRideHistory() {
+                historyList.innerHTML = '';
+                
+                rideHistory.forEach(ride => {
+                    const historyItem = document.createElement('div');
+                    historyItem.className = 'history-item';
+                    historyItem.innerHTML = `
+                        <div class="history-date">${ride.date}</div>
+                        <div class="history-locations">
+                            <div class="history-from">
+                                <div><i class="fas fa-circle" style="color: #3b82f6; font-size: 0.8rem;"></i> From</div>
+                                <div>${ride.from}</div>
+                            </div>
+                            <div><i class="fas fa-arrow-right" style="color: var(--text-gray);"></i></div>
+                            <div class="history-to">
+                                <div><i class="fas fa-map-marker-alt" style="color: #ef4444; font-size: 0.8rem;"></i> To</div>
+                                <div>${ride.to}</div>
+                            </div>
+                        </div>
+                        <div style="margin-top: 10px;">
+                            <div style="color: var(--neon-green);">${ride.seats}</div>
+                            <div style="font-size: 0.85rem; color: var(--text-gray);">Driver: ${ride.driver}</div>
+                        </div>
+                    `;
+                    historyList.appendChild(historyItem);
+                });
+            }
+            
+            // Setup event listeners
+            function setupEventListeners() {
+                // Passenger count controls
+                increasePassengers.addEventListener('click', () => {
+                    let count = parseInt(passengerCount.textContent);
+                    if (count < 10) {
+                        count++;
+                        passengerCount.textContent = count;
+                        updatePassengerLabel();
+                    }
+                });
+                
+                decreasePassengers.addEventListener('click', () => {
+                    let count = parseInt(passengerCount.textContent);
+                    if (count > 1) {
+                        count--;
+                        passengerCount.textContent = count;
+                        updatePassengerLabel();
+                    }
+                });
+                
+                // Trip type toggle
+                oneTimeTrip.addEventListener('change', function() {
+                    if (this.checked) {
+                        recurringOptions.style.display = 'none';
+                    }
+                });
+                
+                recurringTrip.addEventListener('change', function() {
+                    if (this.checked) {
+                        recurringOptions.style.display = 'block';
+                    }
+                });
+                
+                // Find ride button
+                findRideBtn.addEventListener('click', findAvailableRides);
+                
+                // Modal controls
+                closeDetailsModal.addEventListener('click', () => toggleModal(rideDetailsModal, false));
+                closeConfirmedModalBtn.addEventListener('click', () => {
+                    toggleModal(rideConfirmedModal, false);
+                    rideTracking.style.display = 'block';
+                    rideResults.style.display = 'none';
+                    floatingEmergencyBtn.style.display = 'flex';
+                });
+                
+                closeEmergencyModalBtn.addEventListener('click', () => toggleModal(emergencyModal, false));
+                cancelEmergencyBtn.addEventListener('click', () => toggleModal(emergencyModal, false));
+                
+                // Emergency buttons
+                floatingEmergencyBtn.addEventListener('click', () => toggleModal(emergencyModal, true));
+                emergencyBtn.addEventListener('click', () => toggleModal(emergencyModal, true));
+                
+                // Confirm ride
+                confirmRideBtn.addEventListener('click', confirmRide);
+                
+                // Cancel ride
+                if(cancelRideBtn) {
+                    cancelRideBtn.addEventListener('click', () => {
+                        rideTracking.style.display = 'none';
+                        rideResults.style.display = 'block';
+                        floatingEmergencyBtn.style.display = 'none';
+                    });
+                }
+                
+                // Tab switching
+                document.querySelectorAll('.tab').forEach(tab => {
+                    tab.addEventListener('click', function() {
+                        const tabName = this.dataset.tab;
+                        
+                        // Update active tab
+                        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                        this.classList.add('active');
+                        
+                        // Show corresponding content
+                        document.querySelectorAll('.tab-content').forEach(content => {
+                            content.classList.remove('active');
+                        });
+                        document.getElementById(`${tabName}Tab`).classList.add('active');
+                    });
+                });
+                
+                // Get location button
+                document.getElementById('getLocationBtn').addEventListener('click', getCurrentLocation);
+            }
+            
+            // Update passenger label (singular/plural)
+            function updatePassengerLabel() {
+                const count = parseInt(passengerCount.textContent);
+                passengerLabel.textContent = count === 1 ? 'passenger' : 'passengers';
+            }
+            
+            // Toggle modal visibility
+            function toggleModal(modal, show) {
+                if(show) {
+                    modal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    modal.classList.remove('active');
+                    document.body.style.overflow = '';
+                }
+            }
+            
+            // Get current location
+            function getCurrentLocation() {
+                const locationInput = document.getElementById('pickupLocation');
+                const btn = document.getElementById('getLocationBtn');
+                
+                // Simulate getting location
+                btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
+                setTimeout(() => {
+                    locationInput.value = "Current Location";
+                    btn.innerHTML = '<i class="fas fa-location-arrow"></i>';
+                    
+                    // Show notification
+                    showNotification('Location updated successfully!');
+                }, 1500);
+            }
+            
+            // Find available rides
+            function findAvailableRides() {
+                const destination = document.getElementById('destination').value;
+                const passengers = parseInt(passengerCount.textContent);
+                
+                if (!destination) {
+                    showNotification('Please select a destination!', 'error');
+                    return;
+                }
+                
+                // Show loading state
+                findRideBtn.disabled = true;
+                loadingSpinner.style.display = 'inline-block';
+                
+                // Hide previous results
+                rideResults.style.display = 'none';
+                noDriversFound.style.display = 'none';
+                driverList.innerHTML = '';
+                
+                // Simulate API call
+                setTimeout(() => {
+                    const matchingDrivers = simulatedDrivers.filter(driver => 
+                        driver.destinations.includes(destination) && 
+                        driver.seatsAvailable >= passengers
+                    );
+                    
+                    // Hide loading state
+                    loadingSpinner.style.display = 'none';
+                    findRideBtn.disabled = false;
+                    rideResults.style.display = 'block';
+                    
+                    if (matchingDrivers.length > 0) {
+                        matchingDrivers.forEach(driver => {
+                            // Create verification badge
+                            let verificationBadge = '';
+                            if (driver.verified === 'medical') {
+                                verificationBadge = '<span class="verification-badge badge-medical"><i class="fas fa-user-md"></i> MD Verified</span>';
+                            } else if (driver.verified === 'trusted') {
+                                verificationBadge = '<span class="verification-badge badge-trusted"><i class="fas fa-star"></i> Trusted Driver</span>';
+                            } else if (driver.verified === 'certified') {
+                                verificationBadge = '<span class="verification-badge badge-certified"><i class="fas fa-shield-alt"></i> Car Certified</span>';
+                            }
+                            
+                            const driverCard = document.createElement('div');
+                            driverCard.className = 'driver-card';
+                            driverCard.innerHTML = `
+                                <div class="driver-header">
+                                    <div class="driver-info">
+                                        <div class="driver-icon" style="background: rgba(${hexToRgb(driver.color)}, 0.2); color: ${driver.color}">
+                                            <i class="${driver.icon}"></i>
+                                        </div>
+                                        <div>
+                                            <div class="driver-name">${driver.name} ${verificationBadge}</div>
+                                            <div class="driver-rating">
+                                                <i class="fas fa-star"></i> ${driver.rating}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="driver-eta">${driver.eta}</div>
+                                </div>
+                                
+                                <div class="driver-details">
+                                    <div class="detail-item">
+                                        <i class="fas fa-car" style="color: ${driver.color}"></i>
+                                        <div>
+                                            <div>Vehicle</div>
+                                            <div class="detail-value">${driver.vehicle}</div>
+                                        </div>
+                                    </div>
+                                    <div class="detail-item">
+                                        <i class="fas fa-chair" style="color: ${driver.color}"></i>
+                                        <div>
+                                            <div>Seats Available</div>
+                                            <div class="detail-value">${driver.seatsAvailable}/${driver.totalSeats}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="seats-available">
+                                    <i class="fas fa-chair"></i> ${driver.seatsAvailable}/${driver.totalSeats} Seats Available
+                                </div>
+                                
+                                ${driver.specialties.length > 0 ? `
+                                <div class="specialties">
+                                    ${driver.specialties.map(specialty => `
+                                        <div class="specialty">
+                                            <i class="fas fa-check-circle"></i> ${specialty}
+                                        </div>
+                                    `).join('')}
+                                </div>` : ''}
+                                
+                                <button class="btn btn-secondary" style="margin-top: 15px;" 
+                                    data-driver-id="${driver.id}" data-driver-name="${driver.name}">
+                                    <i class="fas fa-car"></i> Select Carpool
+                                </button>
+                            `;
+                            driverList.appendChild(driverCard);
+                        });
+                        
+                        // Add event listeners to driver select buttons
+                        document.querySelectorAll('[data-driver-id]').forEach(button => {
+                            button.addEventListener('click', function() {
+                                const driverId = this.dataset.driverId;
+                                const driverName = this.dataset.driverName;
+                                const driver = simulatedDrivers.find(d => d.id === driverId);
+                                
+                                if (driver) {
+                                    // Update modal with driver details
+                                    document.getElementById('modalDriverName').textContent = driver.name;
+                                    document.getElementById('modalVehicle').textContent = driver.vehicle;
+                                    document.getElementById('modalETA').textContent = driver.eta;
+                                    document.getElementById('modalPickup').textContent = document.getElementById('pickupLocation').value;
+                                    document.getElementById('modalDestination').textContent = document.getElementById('destination').value;
+                                    document.getElementById('modalSeats').textContent = `${driver.seatsAvailable}/${driver.totalSeats}`;
+                                    document.getElementById('modalPassengers').textContent = `${passengerCount.textContent} ${parseInt(passengerCount.textContent) === 1 ? 'passenger' : 'passengers'}`;
+                                    
+                                    // Update seats tab
+                                    const seatsTab = document.getElementById('seatsTab');
+                                    seatsTab.innerHTML = `
+                                        <div style="margin-bottom: 25px;">
+                                            <div style="text-align: center; margin: 20px 0;">
+                                                <div class="seats-available" style="font-size: 1.8rem; padding: 20px;">
+                                                    <i class="fas fa-chair"></i> ${driver.seatsAvailable}/${driver.totalSeats} Seats Available
+                                                </div>
+                                                <div style="color: var(--text-gray); margin-top: 10px;">
+                                                    ${driver.seatsAvailable >= passengers ? 'This carpool can accommodate your group' : 'Not enough seats for your group'}
+                                                </div>
+                                            </div>
+                                            
+                                            <div style="background: rgba(15, 15, 35, 0.5); border-radius: 12px; padding: 15px;">
+                                                <div style="font-weight: 600; margin-bottom: 15px;">Seat Availability:</div>
+                                                
+                                                <div class="seats-indicator">
+                                                    ${Array(driver.totalSeats).fill().map((_, i) => `
+                                                        <div class="seat ${i < (driver.totalSeats - driver.seatsAvailable) ? 'seat-taken' : 'seat-available'}">
+                                                            <i class="fas fa-user"></i>
+                                                        </div>
+                                                    `).join('')}
+                                                </div>
+                                                
+                                                <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid rgba(139, 92, 246, 0.3);">
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                                        <div>Your passengers:</div>
+                                                        <div style="font-weight: 600;">${passengerCount.textContent}</div>
+                                                    </div>
+                                                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                                                        <div>Seats remaining after booking:</div>
+                                                        <div style="font-weight: 600;">${driver.seatsAvailable - passengers}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    `;
+                                    
+                                    // Update route tab
+                                    const routeTab = document.getElementById('routeTab');
+                                    routeTab.innerHTML = `
+                                        <div style="margin: 20px 0;">
+                                            <div class="route-visualization">
+                                                ${driver.route.stops.map(stop => `
+                                                    <div class="route-stop">
+                                                        <i class="${getStopIcon(stop.type)}" style="color: ${getStopColor(stop.type)};"></i>
+                                                        <span>${stop.type === 'home' ? 'Driver\'s Home - ' : stop.type === 'pickup' ? 'Pickup Point - ' : ''}${stop.location}</span>
+                                                    </div>
+                                                `).join('')}
+                                            </div>
+                                            <div style="margin-top: 15px; color: var(--text-gray);">
+                                                <i class="fas fa-info-circle"></i> Total distance: approximately ${driver.route.distance}
+                                            </div>
+                                        </div>
+                                    `;
+                                    
+                                    // Show modal
+                                    toggleModal(rideDetailsModal, true);
+                                }
+                            });
+                        });
+                    } else {
+                        noDriversFound.style.display = 'block';
+                    }
+                }, 2000);
+            }
+            
+            // Get appropriate icon for route stop
+            function getStopIcon(type) {
+                switch(type) {
+                    case 'home': return 'fas fa-home';
+                    case 'pickup': return 'fas fa-map-marker-alt';
+                    case 'destination': return 'fas fa-hospital';
+                    default: return 'fas fa-circle';
+                }
+            }
+            
+            // Get appropriate color for route stop
+            function getStopColor(type) {
+                switch(type) {
+                    case 'home': return 'var(--neon-purple)';
+                    case 'pickup': return 'var(--neon-blue)';
+                    case 'destination': return 'var(--emergency-red)';
+                    default: return 'var(--text-light)';
+                }
+            }
+            
+            // Confirm ride
+            function confirmRide() {
+                const driverName = document.getElementById('modalDriverName').textContent;
+                const passengers = passengerCount.textContent;
+                
+                // Hide details modal
+                toggleModal(rideDetailsModal, false);
+                
+                // Update confirmation modal
+                document.getElementById('confirmedDriverName').textContent = driverName;
+                
+                // Show confirmation modal
+                toggleModal(rideConfirmedModal, true);
+                
+                // Update tracking info
+                document.getElementById('trackingSeats').textContent = `${3 - passengers}/${3}`;
+            }
+            
+            // Show notification
+            function showNotification(message, type = 'success') {
+                // In a real app, this would show a nice notification
+                alert(message);
+            }
+            
+            // Helper function to convert hex to rgb
+            function hexToRgb(hex) {
+                const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+                return result ? 
+                    `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` 
+                    : '0, 0, 0';
+            }
+            
+            // Initialize the app
+            initApp();
+        });
+    </script>
+</body>
+</html>
